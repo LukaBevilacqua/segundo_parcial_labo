@@ -1,0 +1,24 @@
+# screen
+WIDTH = 800
+HEIGHT = 600
+SIZE_SCREEN = (WIDTH, HEIGHT)
+CENTER_SCREEN = (WIDTH // 2, HEIGHT // 2)
+
+# game config
+FPS = 60
+GRAVITY = 1
+
+# player
+
+WIDTH_PLAYER = 50
+HEIGHT_PLAYER = 50
+
+
+# buttons
+BUTTON_WIDTH = 200
+BUTTON_HEIGHT = 50
+
+# colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+BLUE = (0, 0, 255)
