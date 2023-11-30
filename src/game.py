@@ -1,10 +1,15 @@
 import pygame
 from pygame.locals import *
 from config import *
-from player import Player
 from sprite_sheet import SpriteSheet
 from menu import Menu
 from plataforma import Platform
+from playable_character import PlayableCharacter
+from enemy import Enemy
+from sprite import get_animation
+
+
+
 
 class Game:
     def __init__(self) -> None:
@@ -27,20 +32,24 @@ class Game:
         #     pygame.image.load("./src/assets/images/boy_sheet.png").convert_alpha(),
         #     5, 4, WIDTH_PLAYER, HEIGHT_PLAYER, ["idle", "right", "left", "front", "back"])
         
+        sprite_sheet_player = get_animation()
+        
         sprite_sheet_enemy = SpriteSheet(
-            pygame.image.load("./src/assets/images/esqueletos.png").convert_alpha(), 4, 9, 64, 64, ["back", "left", "front", "right"])
+            pygame.image.load("./src/assets/images/enemies/esqueletos.png").convert_alpha(), 4, 9, 64, 64, ["back", "left", "front", "right"])
         
         # sprite_sheet_baby = SpriteSheet(
         #     pygame.image.load("./src/assets/images/knuckles.png").convert_alpha(), 4, 5, 64, 64, ["back", "left", "front", "right"])
         
-        self.sopi = Platform([self.all_sprites, self.platforms],(300, 500, 200, 50))
-        self.sopi2 = Platform([self.all_sprites, self.platforms],(600, 450, 150, 50))
+        Platform([self.all_sprites, self.platforms],(300, 550, 200, 50))
+        Platform([self.all_sprites, self.platforms],(600, 450, 150, 50))
+        Platform([self.all_sprites, self.platforms],(100, 50, 150, 200))
+
 
 
         # creo un player y le paso el grupo donde va a pertenecer
-        # self.player = Player([self.all_sprites], sprite_sheet_player)
-        self.enemy = Player([self.all_sprites, self.enemies], sprite_sheet_enemy, 5)
-        # self.baby = PlayerJumper([self.all_sprites, self.enemies], sprite_sheet_baby)
+        self.player = PlayableCharacter([self.all_sprites], 5)
+        self.enemy = Enemy([self.all_sprites, self.enemies], sprite_sheet_enemy, True, False)
+
 
 
     def run(self):
@@ -65,14 +74,24 @@ class Game:
 
     def update(self):
 
-        plataformas = pygame.sprite.spritecollide(self.enemy, self.platforms, False)
-        offset = (self.sopi.rect.x - self.enemy.rect.x, self.sopi.rect.y - self.enemy.rect.y)
+        plataformas = pygame.sprite.spritecollide(self.player, self.platforms, False)
         for plataforma in plataformas:
-            plataforma_mask = pygame.mask.from_surface(self.sopi.image)
-            if self.enemy.mask.overlap(plataforma_mask, offset) != None:
-                self.enemy.rect.bottom = plataforma.rect.top
-                self.enemy.speed_v = 0
-                self.enemy.is_jumping = False
+            if self.player.rect.bottom >= plataforma.rect.top and self.player.speed_v > 0:
+                self.player.rect.bottom = plataforma.rect.top
+                self.player.speed_v = 0
+        # for plataforma in self.platforms:
+        #     if self.player.rect.right >= plataforma.rect.left:
+        #         self.player.move_right = False
+        #     if self.player.rect.right < plataforma.rect.left:
+        #         self.player.move_right = True
+        #     if self.player.rect.left <= plataforma.rect.right:
+        #         self.player.move_left = False
+        #     if self.player.rect.left > plataforma.rect.right:
+        #         self.player.move_left = True
+
+        # pygame.sprite.spritecollide(self.player, self.enemies, True)
+        
+
 
 
         self.all_sprites.update()
