@@ -1,12 +1,12 @@
 import pygame
 from pygame.locals import *
 from config import *
-from sprite_sheet import SpriteSheet
 from character import Character
 
-class Enemy(Character):
-    def __init__(self, groups, sprite_sheet: SpriteSheet, movement: bool, shoot: bool, life = 1) -> None:
-        super().__init__(groups, sprite_sheet, life)
+
+class Plants(Character):
+    def __init__(self, groups, animations_dict: dict, movement: bool, shoot: bool, life = 1) -> None:
+        super().__init__(groups, animations_dict, life)
         self.movement = movement
         self.life = life
         self.speed = 2
@@ -23,7 +23,7 @@ class Enemy(Character):
                 if current_time - self.last_update >= self.time_animation:
                     self.current_sprite += 1
                     self.image = self.animations["right"][self.current_sprite]
-                    if self.current_sprite == 8:
+                    if self.current_sprite == len(self.animations["right"]):
                         self.current_sprite = 0
                     self.last_update = current_time
             else:
@@ -35,7 +35,7 @@ class Enemy(Character):
                 if current_time - self.last_update >= self.time_animation:
                     self.current_sprite += 1
                     self.image = self.animations["left"][self.current_sprite]
-                    if self.current_sprite == 8:
+                    if self.current_sprite == len(self.animations["left"]):
                         self.current_sprite = 0
                     self.last_update = current_time
             else:
@@ -45,5 +45,5 @@ class Enemy(Character):
             self.rect.bottom = HEIGHT
 
     
-    # def shoot(self, list):
-    #     projectile = 
+    def shoot(self, list):
+        pass
