@@ -10,7 +10,6 @@ class Plants(Character):
         self.movement = movement
         self.life = life
         self.speed = 2
-        self.movement_right = True
         self.can_shoot = shoot
         self.damage = 1
 
@@ -22,9 +21,9 @@ class Plants(Character):
                 current_time = pygame.time.get_ticks()
                 if current_time - self.last_update >= self.time_animation:
                     self.current_sprite += 1
-                    self.image = self.animations["right"][self.current_sprite]
-                    if self.current_sprite == len(self.animations["right"]):
-                        self.current_sprite = 0
+                    self.image = self.animations["up"][self.current_sprite]
+                    if self.current_sprite == ((len(self.animations["up"])) - 1):
+                        self.current_sprite = 1
                     self.last_update = current_time
             else:
                 self.movement_right = False
@@ -34,8 +33,8 @@ class Plants(Character):
                 current_time = pygame.time.get_ticks()
                 if current_time - self.last_update >= self.time_animation:
                     self.current_sprite += 1
-                    self.image = self.animations["left"][self.current_sprite]
-                    if self.current_sprite == len(self.animations["left"]):
+                    self.image = self.animations["up"][self.current_sprite]
+                    if self.current_sprite == ((len(self.animations["up"])) - 1):
                         self.current_sprite = 0
                     self.last_update = current_time
             else:

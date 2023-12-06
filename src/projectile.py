@@ -2,9 +2,10 @@ import pygame
 
 
 
-class Projectile:
+class Projectile(pygame.sprite.Sprite):
     def __init__(self, x, y, direction) -> None:
-        self.suface = pygame.transform.scale(pygame.image.load("").convert_alpha(), (30, 50))
+        super().__init__()
+        self.suface = pygame.transform.scale(pygame.image.load("./src/assets/images/player/fireball/fire_ball_player.png").convert_alpha(), (30, 50))
         self.rect = self.suface.get_rect()
         self.rect.x = x
         self.rect.centery = y

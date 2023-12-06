@@ -12,6 +12,8 @@ class Goombas(Character):
         self.speed = 2
         self.movement_right = True
         self.damage = 1
+        self.rect.center = (400, 350)
+        
 
     def update(self):
         super().update()
@@ -41,3 +43,8 @@ class Goombas(Character):
 
         if self.rect.bottom >= HEIGHT:
             self.rect.bottom = HEIGHT
+
+    def attack(self, player):
+        if self.rect.colliderect(player.hitbox_right) or self.rect.colliderect(player.hitbox_left) or self.rect.colliderect(player.hitbox_top):
+            player.life -= 1
+            print(player.life)

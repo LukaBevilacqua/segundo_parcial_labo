@@ -3,11 +3,12 @@ from pygame.locals import *
 from config import *
 from sprite_sheet import SpriteSheet
 from character import Character
+# from projectile import Projectile
 # from sprites import GetSprites
 
 
 class PlayableCharacter(Character):
-    def __init__(self, groups, animations_dict: dict, life=1) -> None:
+    def __init__(self, groups, animations_dict: dict, x, y, life=1) -> None:
         super().__init__(groups, animations_dict, life)
         self.is_jumping = False
         self.jump_power = -15
@@ -15,11 +16,28 @@ class PlayableCharacter(Character):
         self.speed = 3
         self.move_right = True
         self.move_left = True
-        
+        self.score = 0
+        self.power_up = False
+        self.power_up_time = 10000
+        self.last_power_up_time = 0
+        self.rect.topleft = (x, y)
+
+        # Definir rectángulos para cada lado de Mario
+        self.hitbox_top = pygame.Rect(x, y, 25, 5)
+        self.hitbox_bottom = pygame.Rect(x, y + 20, 25, 5)
+        self.hitbox_left = pygame.Rect(x, y, 5, 25)
+        self.hitbox_right = pygame.Rect(x + 20, y, 5, 25)
+
+    def update_hitboxes(self):
+        self.hitbox_top.topleft = self.rect.topleft
+        self.hitbox_bottom.topleft = (self.rect.left, self.rect.bottom - 5)
+        self.hitbox_left.topleft = self.rect.topleft
+        self.hitbox_right.topleft = (self.rect.right - 5, self.rect.top)
     
     def update(self):
         self.speed_v += GRAVITY
         self.rect.y += self.speed_v
+        self.update_hitboxes()
 
         if self.rect.bottom >= HEIGHT:
             self.rect.bottom = HEIGHT
@@ -60,7 +78,17 @@ class PlayableCharacter(Character):
             if not self.is_jumping and Press_button:
                 self.jump()
                 Press_button = False
-
-
+        if keys[K_SPACE]:
+                self.shoot()
+    
     def jump(self):
         self.speed_v = self.jump_power
+    
+    def touch_flower(self, flower):
+        if self.rect.colliderect(flower.rect):
+            self.power_up = True
+    
+    def shoot(self, projectile):
+        if self.power_up:
+            
+

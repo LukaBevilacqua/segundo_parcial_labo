@@ -13,6 +13,7 @@ class Character(pygame.sprite.Sprite):
         self.current_sprite = 0
         self.image = self.animations[self.current_animation][self.current_sprite]
         self.rect = self.image.get_rect()
+        self.rect.center = (0, 0)
         self.mask = pygame.mask.from_surface(self.image)
         self.speed = 5
         self.last_update = pygame.time.get_ticks()
