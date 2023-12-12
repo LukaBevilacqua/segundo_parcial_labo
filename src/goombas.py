@@ -5,14 +5,13 @@ from character import Character
 
 
 class Goombas(Character):
-    def __init__(self, groups, animations_dict: dict, movement: bool, life = 1) -> None:
+    def __init__(self, groups, animations_dict: dict, where: tuple, life = 1) -> None:
         super().__init__(groups, animations_dict, life)
-        self.movement = movement
         self.life = life
         self.speed = 2
         self.movement_right = True
         self.damage = 1
-        self.rect.center = (400, 350)
+        self.rect.center = where
         
 
     def update(self):
@@ -48,3 +47,8 @@ class Goombas(Character):
         if self.rect.colliderect(player.hitbox_right) or self.rect.colliderect(player.hitbox_left) or self.rect.colliderect(player.hitbox_top):
             player.life -= 1
             print(player.life)
+
+    def die(self, player):
+        if self.rect.colliderect(player.hitbox_bottom):
+            self.image = self.animations["die"][0]
+            self.kill()

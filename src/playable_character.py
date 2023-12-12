@@ -3,12 +3,11 @@ from pygame.locals import *
 from config import *
 from sprite_sheet import SpriteSheet
 from character import Character
-# from projectile import Projectile
-# from sprites import GetSprites
+from sounds import Sounds
 
 
 class PlayableCharacter(Character):
-    def __init__(self, groups, animations_dict: dict, x, y, life=1) -> None:
+    def __init__(self, groups, animations_dict: dict, x, y, projectile, life=1) -> None:
         super().__init__(groups, animations_dict, life)
         self.is_jumping = False
         self.jump_power = -15
@@ -21,6 +20,8 @@ class PlayableCharacter(Character):
         self.power_up_time = 10000
         self.last_power_up_time = 0
         self.rect.topleft = (x, y)
+        self.projectile = projectile
+        self.jump_sound = Sounds()
 
         # Definir rectángulos para cada lado de Mario
         self.hitbox_top = pygame.Rect(x, y, 25, 5)
@@ -83,12 +84,14 @@ class PlayableCharacter(Character):
     
     def jump(self):
         self.speed_v = self.jump_power
+        self.jump_sound.jump_sound.play()
+
     
     def touch_flower(self, flower):
         if self.rect.colliderect(flower.rect):
             self.power_up = True
     
-    def shoot(self, projectile):
+    def shoot(self):
         if self.power_up:
-            
+            pass
 

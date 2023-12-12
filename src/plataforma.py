@@ -9,7 +9,6 @@ class Platform(pygame.sprite.Sprite):
         self.image = pygame.Surface((rect[2], rect[3]))
         self.rect = self.image.get_rect(topleft = (rect[0], rect[1]))
         self.mask = pygame.mask.from_surface(self.image)
-        self.image.fill(BLACK)
         self.can_broke = can_broke
         self.have_item = item
 

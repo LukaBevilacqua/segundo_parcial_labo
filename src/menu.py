@@ -18,7 +18,7 @@ class Menu:
             pygame.draw.rect(self.screen, colour_hover, rect, border_radius=10)
         else:
             pygame.draw.rect(self.screen, colour_button, rect, border_radius=10)
-        self.show_text_button(self.screen, text, rect.centerx, rect.centery)
+        self.show_text_button(text, rect.centerx, rect.centery)
 
     def finish(self):
         import sys
